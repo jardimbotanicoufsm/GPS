@@ -123,8 +123,8 @@ function inicializarMovimentoTeclado() {
 
     // Atualiza centro da tela em caso de redimensionamento (se necessário)
     window.addEventListener('resize', () => {
-        center.x = window.innerWidth / 2;
-        center.y = window.innerHeight / 2;
+        centroDaTela.x = window.innerWidth / 2;
+        centroDaTela.y = window.innerHeight / 2;
     });
 }
 

@@ -4,19 +4,12 @@ let posX, posY;
 // Elemento que representa o usuário
 const usuario = document.getElementById('usuario');
 
-// Define o centro da tela, usado como posição inicial do usuário
-const center = {
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2
-};
 
-
-// Função que inicializa a posição do usuário no centro da tela
 function inicializarUsuario() {
-    posX = center.x;                    // define a posição X no centro da tela
-    posY = center.y;                    // define a posição Y no centro da tela
-    usuario.style.left = `${posX}px`;   // posiciona o usuario na horizontal
-    usuario.style.top = `${posY}px`;    // posiciona o usuario na vertical
+    posX = centroDaTela.x;
+    posY = centroDaTela.y;
+    usuario.style.left = `${posX}px`;
+    usuario.style.top = `${posY}px`;
 }
 
 
