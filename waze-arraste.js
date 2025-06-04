@@ -1,3 +1,9 @@
+let referenciaGeografica = null; // Vai guardar {lat, lon}
+const centroDaTela = {
+  x: window.innerWidth / 2,
+  y: window.innerHeight / 2
+};
+
 const limitesGeograficos = {
   latMin: -22.9170, // sul
   latMax: -22.9120, // norte
@@ -12,20 +18,16 @@ function posicionarUsuarioInicial() {
         const latitude = pos.coords.latitude;
         const longitude = pos.coords.longitude;
 
-        const { x, y } = converterCoordenadasParaTela(latitude, longitude);
+        // Salva a posição geográfica do centro da tela
+        referenciaGeografica = { lat: latitude, lon: longitude };
 
-        // Salva como ponto de partida oficial
-        posX = x;
-        posY = y;
-        setPosicaoUsuario(posX, posY);
-        atualizarBussolas(posX, posY);
+        // Coloca o ícone do usuário no centro da tela
+        setPosicaoUsuario(centroDaTela.x, centroDaTela.y);
+
+        atualizarBussolas(centroDaTela.x, centroDaTela.y);
       },
       (erro) => {
         console.error("Erro ao obter posição inicial: ", erro);
-        // Fallback opcional: centralizar se falhar
-        posX = window.innerWidth / 2;
-        posY = window.innerHeight / 2;
-        setPosicaoUsuario(posX, posY);
       },
       {
         enableHighAccuracy: true,
@@ -37,14 +39,28 @@ function posicionarUsuarioInicial() {
   }
 }
 
-function converterCoordenadasParaTela(lat, lon) {
-  const { latMin, latMax, lonMin, lonMax } = limitesGeograficos;
 
-  const x = ((lon - lonMin) / (lonMax - lonMin)) * window.innerWidth;
-  const y = ((latMax - lat) / (latMax - latMin)) * window.innerHeight;
+function converterCoordenadasParaTela(lat, lon) {
+  if (!referenciaGeografica) return { x: 0, y: 0 };
+
+  const METROS_POR_GRAU_LAT = 111320;
+  const METROS_POR_GRAU_LON = 111320 * Math.cos(referenciaGeografica.lat * Math.PI / 180);
+
+  const deltaLat = lat - referenciaGeografica.lat;
+  const deltaLon = lon - referenciaGeografica.lon;
+
+  const metrosX = deltaLon * METROS_POR_GRAU_LON;
+  const metrosY = -deltaLat * METROS_POR_GRAU_LAT; // invertido porque Y cresce para baixo
+
+  // 1 metro = N pixels (ajustável, aqui usamos escala de 1:1)
+  const escala = 1; // Aumente para zoom-out, diminua para zoom-in
+
+  const x = centroDaTela.x + metrosX * escala;
+  const y = centroDaTela.y + metrosY * escala;
 
   return { x, y };
 }
+
 
 function inicializarMovimentoGPS() {
   if ("geolocation" in navigator) {
