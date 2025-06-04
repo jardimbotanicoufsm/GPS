@@ -14,11 +14,18 @@ function posicionarUsuarioInicial() {
 
         const { x, y } = converterCoordenadasParaTela(latitude, longitude);
 
-        setPosicaoUsuario(x, y);
-        atualizarBussolas(x, y);
+        // Salva como ponto de partida oficial
+        posX = x;
+        posY = y;
+        setPosicaoUsuario(posX, posY);
+        atualizarBussolas(posX, posY);
       },
       (erro) => {
         console.error("Erro ao obter posição inicial: ", erro);
+        // Fallback opcional: centralizar se falhar
+        posX = window.innerWidth / 2;
+        posY = window.innerHeight / 2;
+        setPosicaoUsuario(posX, posY);
       },
       {
         enableHighAccuracy: true,
