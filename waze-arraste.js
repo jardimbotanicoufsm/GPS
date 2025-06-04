@@ -53,7 +53,7 @@ function converterCoordenadasParaTela(lat, lon) {
   const metrosY = -deltaLat * METROS_POR_GRAU_LAT; // invertido porque Y cresce para baixo
 
   // 1 metro = N pixels (ajustável, aqui usamos escala de 1:1)
-  const escala = 1; // Aumente para zoom-out, diminua para zoom-in
+  const escala = 10; // Aumente para zoom-out, diminua para zoom-in
 
   const x = centroDaTela.x + metrosX * escala;
   const y = centroDaTela.y + metrosY * escala;
