@@ -5,6 +5,30 @@ const limitesGeograficos = {
   lonMax: -43.2200  // leste
 };
 
+function posicionarUsuarioInicial() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const latitude = pos.coords.latitude;
+        const longitude = pos.coords.longitude;
+
+        const { x, y } = converterCoordenadasParaTela(latitude, longitude);
+
+        setPosicaoUsuario(x, y);
+        atualizarBussolas(x, y);
+      },
+      (erro) => {
+        console.error("Erro ao obter posição inicial: ", erro);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000
+      }
+    );
+  } else {
+    alert("Seu navegador não suporta geolocalização.");
+  }
+}
 
 function converterCoordenadasParaTela(lat, lon) {
   const { latMin, latMax, lonMin, lonMax } = limitesGeograficos;
@@ -81,5 +105,6 @@ function inicializarMovimentoTeclado() {
     });
 }
 
+posicionarUsuarioInicial();
 inicializarMovimentoGPS();
-//inicializarMovimentoTeclado();
+inicializarMovimentoTeclado();
