@@ -38,7 +38,7 @@ function calcularDistancia(ux, uy, px, py) {
   return Math.hypot(px - ux, py - uy);
 }
 
-
+//const distanciaFinal = new Array(3);
 // Atualiza a rotação das bússolas, as distâncias e as legendas baseadas na posição do usuário
 function atualizarBussolas(ux, uy) {
   sistemas.forEach((sistema, i) => {
@@ -63,6 +63,7 @@ function atualizarBussolas(ux, uy) {
     const dist = Math.round(calcularDistancia(ux, uy, ponto.x, ponto.y));
     distancias[i].textContent = `${dist} m`;
     distancias[i].style.display = 'block';
+    //distanciaFinal[i] = dist[i];
 
     // Posiciona o elemento de distância próximo à bússola
     distancias[i].style.top = `${bussola.offsetTop - 90}px`;
@@ -81,8 +82,8 @@ function inicializarDestinos() {
     pontoEl.addEventListener('click', () => {
       // Calcula a posição central do ponto clicado
       const ponto = {
-        x: pontoEl.offsetLeft + pontoEl.offsetWidth / 2,
-        y: pontoEl.offsetTop + pontoEl.offsetHeight / 2
+        x: pontoEl.offsetLeft + pontoEl.offsetWidth / 2 + 10,
+        y: pontoEl.offsetTop + pontoEl.offsetHeight / 2 + 10
       };
 
       // Obtém a posição atual do usuário (função presumida disponível)

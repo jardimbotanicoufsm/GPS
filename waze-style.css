@@ -1,135 +1,144 @@
-/* === reset do documento === */
+/* === Reset === */
 body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* === Container com fundo === */
+.container, #area {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('imagens/gramado.jpeg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* === Canvas === */
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* === Pontos de destino === */
+.ponto-especifico {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+}
+.icone-destino {
+  width: 8vw;
+  max-width: 50px;
+  height: auto;
+  filter: drop-shadow(4px 4px 4px rgba(254, 254, 254, 0.5));
+}
+
+.bussola-com-distancia[data-id="0"] {
+  left: 40%;
+  bottom: 10%;
+  position: absolute;
+}
+
+.bussola-com-distancia[data-id="1"] {
+  left: 50%;
+  bottom: 10%;
+  position: absolute;
+}
+
+.bussola-com-distancia[data-id="2"] {
+  left: 60%;
+  bottom: 10%;
+  position: absolute;
+}
+
+/* === Bússolas === */
+.bussola {
+  position: absolute;
+  width: 15vw;
+  max-width: 100px;
+  height: auto;
+  transform-origin: center center;
+  transition: transform 0.05s linear;
+  z-index: 3;
+}
+
+/* === Distância (acima da bússola) === */
+.distancia {
+  white-space: nowrap;
+  transform: translate(-50%, -260%);
+  font-size: clamp(12px, 2vw, 16px);
+  font-weight: bold;
+  color: rgb(0, 46, 24);
+  background-color: rgba(0, 191, 100, 0.9);
+  line-height: 1;
+  padding: 0.4em 0.5em;
+  border-radius: 5px;
+  z-index: 2;
+  display: none;
+  text-align: center;
+}
+
+/* === Legenda (abaixo da bússola) === */
+.legenda {
+  transform: translate(-50%, 70%);
+  white-space: nowrap;
+  font-size: clamp(9px, 1.2vw, 14px);
+  background-color: rgba(0, 191, 100, 0.9);
+  color: rgb(0, 46, 24);
+  padding: 0.3em 0.6em;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 2;
+}
+
+/* === Ícone do usuário === */
+.usuario {
+  position: absolute;
+  width: 8vw;
+  max-width: 50px;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  cursor: pointer;
+  transition: transform 0.2s ease, width 0.2s, height 0.2s;
+}
+.usuario.ativo {
+  width: 11vw;
+  max-width: 70px;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* === Células da grade (opcional) === */
+.celula {
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  position: absolute;
+  width: 20px;
+  aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 768px) {
+  .bussola-com-distancia[data-id="0"] {
+    left: calc(100% / 6);
+    bottom: 5%;
+    top: auto;
   }
 
-/* === container inicial com imagem do mapa no fundo (aqui será trocado pelo fundo do mapa do app) === */
-  .container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-image: url('imagens/gramado.jpeg');
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-  }
-
-
-/* === linhas de eixo central (escondidas no momento) === */
-  .linha-eixo {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.25);
-  }
-  .linha-x {
-    width: 100%;
-    height: 2px;
-    top: 50%;
-    left: 0;
-  }
-  .linha-y {
-    width: 2px;
-    height: 100%;
+  .bussola-com-distancia[data-id="1"] {
     left: 50%;
-    top: 0;
-  }
-  
-
-/* === estilo das bússolas rotativas === */
-  .bussola {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    transform: translate(-50%, -50%) rotate(0deg);
-    transform-origin: center center;
-    transition: transform 0.05s linear;
-    z-index: 1;
-  }
-  
-
-/* === pontos onde os ícones aparecem (pontos de destino) === */
-  .ponto-especifico {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    z-index: 3;
-    filter: drop-shadow(4px 4px 4px rgba(254, 254, 254, 0.5));
-  }
-  
-
-/* === ícone arrastável do usuário === */
-  .usuario {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    cursor: pointer;
-    transition: transform 0.2s ease, width 0.2s, height 0.2s;
-  }
-  /* efeito do usuário quando está sendo arrastado */
-  .usuario.ativo {
-    width: 70px;
-    height: 70px;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
-  }
-  
-
-/* === texto das distâncias acima das bússolas (vou colocar abaixo depois) === */
-  .distancia {
-    position: absolute;
-    transform: translateX(-50%);
-    font-family: 'Roboto', sans-serif;
-    font-size: 20px;
-    color: rgb(0, 46, 24);
-    font-weight: bold;
-    z-index: 3;
-    text-align: center;
-    background-color: rgba(0, 191, 100, 0.9);
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: none;
-  }
-  
-/* === legendas abaixo das bússolas (depois serão substituídas pelas fotos dos pontos) === */
-  .legenda {
-    position: absolute;
-    transform: translateX(-50%);
-    font-family: 'Roboto', sans-serif;
-    top: 140%;
-    font-size: 15px;
-    color: rgb(0, 46, 24);
-    text-align: center;
-    margin-top: 5px;
-    z-index: 2;
-    background-color: rgba(0, 191, 100, 0.9);
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-  
-  #area {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .celula {
-    box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0); /* Linhas da grade */
-    position: absolute;
-    width: 20px;
-    aspect-ratio: 1 / 1; /* força altura igual à largura */
+    bottom: 5%;
+    top: auto;
   }
 
-  #canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0; /* abaixo de todos os ícones, imagens, etc */
-    pointer-events: none; /* permite clicar nos elementos acima normalmente */
+  .bussola-com-distancia[data-id="2"] {
+    left: calc(100%*5 / 6);
+    bottom: 5%;
+    top: auto;
   }
+}

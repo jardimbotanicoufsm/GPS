@@ -1,4 +1,4 @@
-const tamanhoGrid = 20;
+const tamanhoGrid = 10;
 const larguraCelula = tamanhoGrid, alturaCelula = tamanhoGrid; // Tamanho das células (para visualização)
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -332,14 +332,26 @@ canvas.addEventListener('click', e => {
 });
 
 // Exemplo: marca alguns obstáculos (você pode editar)
-grade[15][35] = 1;
-grade[16][35] = 1;
-grade[17][35] = 1;
-grade[15][36] = 1;
-grade[15][37] = 1;
-grade[15][38] = 1;
-grade[15][39] = 1;
-grade[16][39] = 1;
-grade[17][39] = 1;
+grade[30][71] = 1;
+grade[30][70] = 1;
+grade[31][70] = 1;
+grade[32][70] = 1;
+grade[33][70] = 1;
+grade[34][70] = 1;
+grade[35][70] = 1;
+grade[30][72] = 1;
+grade[30][73] = 1;
+grade[30][74] = 1;
+grade[30][75] = 1;
+grade[30][76] = 1;
+grade[30][77] = 1;
+grade[30][78] = 1;
+grade[30][78] = 1;
+grade[30][79] = 1;
+grade[31][79] = 1;
+grade[32][79] = 1;
+grade[33][79] = 1;
+grade[34][79] = 1;
+grade[35][79] = 1;
 
 desenharGrade();

@@ -2,6 +2,6 @@
 window.addEventListener('DOMContentLoaded', () => {
     inicializarUsuario();
     inicializarDestinos();
-    inicializarArraste();
+    inicializarMovimentoTeclado();
     });
   
